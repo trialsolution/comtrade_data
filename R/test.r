@@ -1,3 +1,10 @@
+#
+#  Example file for saving data frames into GDX format
+#  Received from Wietse Dol through the GAMS mailing list
+#  (adapted to the cylinder data set in the second part of the file)
+#  see test_wietse.r and test_wgdx.r for more examples
+#
+
 library(gdxrrw);
 
 #1 use dataframe mtcars and make it useful as a parameter in GAMS
