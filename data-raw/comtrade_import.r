@@ -14,20 +14,31 @@ save(bigdata, file="data/bigdata.rdata")
 #  Note that the original CSV contained non-numeric codes for HS
 #  Those non-numeric codes are removed in the file ending to ...MODIFIED.csv
 #
-commodities <- read.csv(file="inst//extdata//COMTRADE HS2007 - COMMODITIES MODIFIED.csv")
+commodities <- read.csv(file="inst//extdata//COMTRADE HS2007 - COMMODITIES MODIFIED.csv", colClasses=c("character","factor","character"))
 commodities <- tbl_df(commodities)
+colnames(commodities) <- c("Commodity", "hs_code", "Commodity2")
 
-partners <- read.csv(file="inst//extdata//COMTRADE HS2007 - PARTNERS.csv")
+
+#  note that Namibia's iso2 code (NA) would be missing value in R by default => use the na.strings option
+partners <- read.csv(file="inst//extdata//COMTRADE HS2007 - PARTNERS.csv", na.strings=" ")
 partners <- tbl_df(partners)
+partners <- filter(partners, Name!="Common items")
+colnames(partners)[[1]] <- "Partner"
 
-reporters <- read.csv(file="inst//extdata//COMTRADE HS2007 - REPORTERS.csv")
+
+#
+#  Change
+
+
+reporters <- read.csv(file="inst//extdata//COMTRADE HS2007 - REPORTERS.csv", na.strings=" ")
 reporters <- tbl_df(reporters)
+reporters <- filter(reporters, Name!="Common items")
+colnames(reporters)[[1]] <- "Reporter"
 
 
 #
 # check for missing hs codes
 #
-colnames(commodities) <- c("Commodity", "hs_code", "Commodity2")
 check <- bigdata %>% left_join(commodities)
 empty_hs6 <- check %>% filter(is.na(hs_code))
 write.csv(empty_hs6, file="empty_hscode.csv", row.names=FALSE)
@@ -43,7 +54,6 @@ duplicates  <- check %>% group_by(Commodity, Year, Fact, Partner, Reporter, Trad
 #
 # check for missing partner code
 #
-colnames(partners)[[1]] <- "Partner"
 check_partners <- bigdata %>% left_join(partners)
 empty_partners <- check_partners %>% filter(is.na(CTY.Code))
 
@@ -51,7 +61,6 @@ empty_partners <- check_partners %>% filter(is.na(CTY.Code))
 #
 # check for missing reporters
 #
-colnames(reporters)[[1]] <- "Reporter"
 check_reporters <- bigdata %>% left_join(reporters)
 empty_reporters <- check_reporters %>% filter(is.na(CTY.Code))
 

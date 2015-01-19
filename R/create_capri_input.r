@@ -60,7 +60,7 @@ comtrade_capri <- data.frame(comtrade_capri)
 attr(comtrade_capri, "symName") <- "comtrade_hs"
 attr(comtrade_capri, "ts")      <- "comtrade bilateral data at tariff line level"
 
-wgdx.lst('comtrade_hs.gdx', comtrade_capri)
+wgdx.lst('gdx//comtrade_hs.gdx', comtrade_capri)
 
 
 ##################################################################################

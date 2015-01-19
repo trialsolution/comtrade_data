@@ -23,5 +23,41 @@ tlines$label <- factor(tlines$label)
 tlines$hscode <- factor(tlines$hscode)
 
 attr(tlines, "symName") <- "hs_lines"
-wgdx.lst("test_sets.gdx", tlines)
+wgdx.lst("gdx//tarifflines.gdx", tlines)
+
+
+#
+#  partners code list
+#
+
+load("data/partners.rdata")
+
+colnames(partners) <- c("partner", "cty", "iso3", "iso2")
+
+filter(partners, is.na(cty))
+
+partners <- data.frame(partners)
+partners$cty <- factor(partners$cty)
+
+
+attr(partners, "symName") <- "partners"
+wgdx.lst("gdx//partners.gdx", partners)
+
+
+#
+#  reporters code list
+#
+
+load("data/reporters.rdata")
+
+colnames(reporters) <- c("partner", "cty", "iso3", "iso2")
+
+filter(reporters, is.na(cty))
+
+reporters <- data.frame(reporters)
+reporters$cty <- factor(reporters$cty)
+
+
+attr(reporters, "symName") <- "reporters"
+wgdx.lst("gdx//reporters.gdx", reporters)
 
