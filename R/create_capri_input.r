@@ -41,6 +41,7 @@ comtrade_capri$reportercode <- factor(comtrade_capri$reportercode)
 comtrade_capri$partnercode <- factor(comtrade_capri$partnercode)
 comtrade_capri$year <- factor(comtrade_capri$year)
 
+save(comtrade_capri, file="data/comtrade_capri.rdata")
 
 #
 #  Write info to a .gdx so that CAPRI can pick it up
